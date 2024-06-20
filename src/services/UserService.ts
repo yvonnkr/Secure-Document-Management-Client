@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {baseUrl, isJsonContentType, processError, processResponse} from "../utils/requestutils.ts";
 import {IResponse} from "../models/IResponse.ts";
 import {QrCodeRequest, User} from "../models/IUser.ts";
-import {IRegisterRequest, IUserRequest} from "../models/ICredentials.ts";
+import {EmailAddress, IRegisterRequest, IUserRequest, UpdateNewPassword} from "../models/ICredentials.ts";
 import {Http} from "../enum/http.method.ts";
 
 export const userAPI = createApi({
@@ -35,6 +35,7 @@ export const userAPI = createApi({
                 method: Http.POST,
                 body: registerRequest
             }),
+            transformResponse: processResponse<void>,
             transformErrorResponse: processError
         }),
         verifyAccount: builder.mutation<IResponse<void>, string>({
@@ -42,7 +43,37 @@ export const userAPI = createApi({
                 url: `/verify/account?key=${key}`,
                 method: Http.GET
             }),
+            transformResponse: processResponse<void>,
             transformErrorResponse: processError
+        }),
+        resetPassword: builder.mutation<IResponse<void>, EmailAddress>({
+            query: (email) => ({
+                url: '/resetpassword',
+                method: Http.POST,
+                body: email
+            }),
+            transformResponse: processResponse<void>,
+            transformErrorResponse: processError,
+            invalidatesTags: (result, error) => error ? [] : ['User']
+        }),
+        verifyPassword: builder.mutation<IResponse<User>, string>({
+            query: (key) => ({
+                url: `/verify/password?key=${key}`,
+                method: Http.GET
+            }),
+            transformResponse: processResponse<User>,
+            transformErrorResponse: processError,
+            invalidatesTags: (result, error) => error ? [] : ['User']
+        }),
+        doResetPassword: builder.mutation<IResponse<void>, UpdateNewPassword>({
+            query: (passwordRequest) => ({
+                url: `/resetpassword/reset`,
+                method: Http.POST,
+                body: passwordRequest
+            }),
+            transformResponse: processResponse<void>,
+            transformErrorResponse: processError,
+            invalidatesTags: (result, error) => error ? [] : ['User']
         }),
         verifyQrCode: builder.mutation<IResponse<User>, QrCodeRequest>({
             query: (qrCodeRequest) => ({
