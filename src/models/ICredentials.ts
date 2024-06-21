@@ -13,5 +13,5 @@ export interface IRegisterRequest extends IUserRequest {
 }
 
 export type EmailAddress = Pick<IUserRequest, "email">;
-export type UpdatePassword = Pick<IUserRequest, "password"> & { newPassword: string, confirmNewPassword: string };
+export type UpdatePassword = { newPassword: string, confirmNewPassword: string, currentPassword: string};
 export type UpdateNewPassword = Pick<IUser, "userId"> & UpdatePassword;
