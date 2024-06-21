@@ -40,17 +40,19 @@ const router = createBrowserRouter(createRoutesFromElements(
                 <Route index path={"/documents"} element={<Documents/>}/>
                 <Route path={"/"} element={<Navigate to={"/documents"}/>}/>
                 <Route path='documents/:documentId' element={<DocumentDetails/>}/>
-            </Route>
-            <Route element={<RestrictedRoute/>}>
-                <Route path={"users"} element={<Users/>}/>
-            </Route>
-            <Route path='/user' element={<User/>}>
-                <Route path='/user' element={<Navigate to='/user/profile'/>}/>
-                <Route path='profile' element={<Profile/>}/>
-                <Route path='password' element={<Password/>}/>
-                <Route path='settings' element={<Settings/>}/>
-                <Route path='authorization' element={<Authorization/>}/>
-                <Route path='authentication' element={<Authentication/>}/>
+            
+                <Route element={<RestrictedRoute/>}>
+                    <Route path={"users"} element={<Users/>}/>
+                </Route>
+
+                <Route path='/user' element={<User/>}>
+                    <Route path='/user' element={<Navigate to='/user/profile'/>}/>
+                    <Route path='profile' element={<Profile/>}/>
+                    <Route path='password' element={<Password/>}/>
+                    <Route path='settings' element={<Settings/>}/>
+                    <Route path='authorization' element={<Authorization/>}/>
+                    <Route path='authentication' element={<Authentication/>}/>
+                </Route>
             </Route>
         </Route>
 

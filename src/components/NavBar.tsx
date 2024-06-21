@@ -2,13 +2,19 @@ import React from 'react';
 import {userAPI} from "../services/UserService.ts";
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import logo from "../assets/logo.png";
+import {Key} from "../enum/cache.key.ts";
 
 const NavBar = () => {
     const {data: user, error, isLoading, refetch} = userAPI.useFetchUserQuery();
+    const [logout, { isLoading: logoutLoading }] = userAPI.useLogoutMutation();
     const navigate = useNavigate();
 
+
     const onLogout = async () => {
-        //todo
+        localStorage.removeItem(Key.LOGGEDIN);
+        localStorage.removeItem(Key.ROLE);
+        await logout();
+        navigate('/login');
     };
 
     return (
