@@ -16,7 +16,7 @@ module.exports = {
         ],
         // custom
         "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
         "no-unused-vars": "warn",
         // "@typescript-eslint/no-unused-vars-experimental": "error",
